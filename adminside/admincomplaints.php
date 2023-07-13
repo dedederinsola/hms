@@ -137,10 +137,10 @@
                             vertical-align: middle;
                             text-align:left;">Resolved</button></form>
                         </td>
-                    </tr>
-                    </table>';
+                    </tr>';
             }
             $result->free();
+            echo '</table>';
         } 
         // if (!empty($message)) {
         //     echo $message;

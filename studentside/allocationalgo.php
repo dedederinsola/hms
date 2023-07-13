@@ -156,7 +156,7 @@ function assignRoomToStudent($matric_no, $name, $conn) {
             $updateStmt->execute();
 
             // Set session variables
-            $_SESSION['room_no'] = $room_no;
+            $_SESSION['room_no'] = $tableName . $room_no;
             $_SESSION['name'] = $name;
 
             // Return the concatenation of table name with room number
