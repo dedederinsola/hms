@@ -1,7 +1,15 @@
+<?php
+    include 'studentdetailsMySQLi.php';
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+}
+?>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Sign Students Out</title>
+    <title>Special Rooms</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
@@ -35,9 +43,6 @@
     <link href="dashboard.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
  -->
-    <?php 
-        include 'connectMySQLi.php';
-    ?>
   </head>
 
   <body>
@@ -80,95 +85,72 @@
                   <a href="#"><img src="logo.png" alt="logo"></a>
                   </div>
               </div>
-              <?php include "adminnavbar.php"; ?>
+              <?php include "studentnavbar.php"; ?>
           </div>
           <!-- Sidebar Area End Here -->
 
         <div class="dashboard-content-one">
                 <!-- Breadcubs Area Start Here -->
                 <div class="breadcrumbs-area">
-                    <h3>Sign Student Out of Hostel</h3>
+                    <h3>Special Rooms</h3>
                 </div>
         <!-- Keep all page content within the page-content inset div! -->
         <div class="page-content inset">
-            <form action = '<?php echo $_SERVER['PHP_SELF']; ?>' method= 'post'>
-                <label for="search-box">Matric Number:</label>
-                <input type="text" name= 'search-box'/>
-                <button type='submit' name="vacate" id="sign-out-button" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style="padding: 12px 15px;
-                max-width:150px; 
-                max-height:40px; 
-                font-size: 13px;
-                white-space: nowrap;
-                vertical-align: middle;
-                text-align:left;">Search</button>
-            </form>
-
-        <?php 
 
 
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                // Retrieve the input data
-                error_reporting(0);
-                $matric_no = $_POST['search-box'];
-                // return;
+<?php 
+    $user = "root"; 
+    $password = ""; 
+    $database = "crawford_uni"; 
+    $conn = new mysqli("localhost", $user, $password, $database); 
+
+    $rooms = NULL;
+    
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['hostel']) && !empty($_POST['hostel'])){
+            $hostel = $_POST['hostel'];
+        }
+
+        $sql = "SELECT DISTINCT room_no
+                FROM osun
+                WHERE name IS NULL AND matric_no IS NULL";
+        
+        $rooms = $conn->query($sql);
+
+        if ($rooms) {
+            echo '<table class="table table-bordered noprint" border="2" cell cellspacing="15" cellpadding="5" width="1000"> 
+            <thead class="thead-light"> 
+                <th> <font face="Arial">Room Number</font> </th> 
+                <th> <font face="Arial">Select</font> </th> 
+            </thead>';
+
+            while ($row = mysqli_fetch_assoc($rooms)) {
+                $room_no = $row['room_no'];
+
+                echo '<tr>
+                        <td>' .$room_no. '</td>
+                        <td>
+                            <form action="requestroom.php" method="POST">
+                            <input type="hidden" name="room_no" value="'.$room_no.'">
+                            <button type="submit" name="select_room" id="select_room" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= "padding: 12px 15px;
+                            max-width:150px; 
+                            max-height:40px; 
+                            font-size: 13px;
+                            white-space: nowrap;
+                            vertical-align: middle;
+                            text-align:left;">Choose This Room</button></form>
+                        </td>
+                    </tr>';
             }
-            // else {
-            //     echo 'Enter Matric Number';
-            // }
-            $query = "SELECT * FROM students WHERE matric_no= ?";
-            $stmt = mysqli_prepare($conn, $query);
-            mysqli_stmt_bind_param($stmt, 's', $matric_no);
-            mysqli_stmt_execute($stmt);
-            $result = mysqli_stmt_get_result($stmt);
+            echo '</table></br>';
+
+        }
+        
+    }
+
+?>
 
 
-            echo '<table class="table table-bordered noprint" border="2" border="2" cell cellspacing="15" cellpadding="5" width="1000"> 
-                <thead class="thead-light"> 
-                    <th> <font face="Arial">Name</font> </th> 
-                    <th> <font face="Arial">Matric Number</font> </th> 
-                    <th> <font face="Arial">Date of Birth</font> </th> 
-                    <th> <font face="Arial">Gender</font> </th> 
-                    <th> <font face="Arial">Level</font> </th> 
-                    <th> <font face="Arial">Department</font> </th> 
-                    <th> <font face="Arial">Room</font> </th> 
-                    <th> <font face="Arial">Sign Out</font> </th> 
-                </thead>';
-
-            if ($result) {
-                while ($row = $result->fetch_assoc()) {
-                    $name = $row["name"];
-                    $matric_no = $row["matric_no"];
-                    $dob = $row["dob"];
-                    $gender = $row["gender"];
-                    $level = $row["level"]; 
-                    $dept = $row["dept"]; 
-                    $room_no = $row["room_no"]; 
-
-                    echo '<tr> 
-                            <td>'.$name.'</td> 
-                            <td>'.$matric_no.'</td> 
-                            <td>'.$dob.'</td> 
-                            <td>'.$gender.'</td> 
-                            <td>'.$level.'</td> 
-                            <td>'.$dept.'</td> 
-                            <td>'.$room_no.'</td> 
-                            <td>
-                                <form action="actualstudentsignoutscript.php" method="POST">
-                                <input type="hidden" name="matric_no" value="'.$matric_no.'">
-                                <button type="submit" name="vacate" id="sign-out-button" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= " padding: 12px 15px;
-                                max-width:150px; 
-                                max-height:40px; 
-                                font-size: 13px;
-                                white-space: nowrap;
-                                vertical-align: middle;
-                                text-align:left;">Sign Student Out</button></form>
-                            </td>
-                        </tr>';
-                }
-                $result->free();
-            } 
-
-        ?>
         </div>
       </div>
       

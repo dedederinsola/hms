@@ -118,27 +118,43 @@ if (session_status() == PHP_SESSION_NONE) {
 
     if ($gender === 'Female') {
 
-        $query = "SELECT * FROM girls_special";
+        $query = "SELECT hostel FROM girls_special";
         $result = $conn->query($query);
+        while ($row = $result->fetch_assoc()) {
+            $tableNames[] = $row["hostel"];
+        }
     
 
         echo '<p style="font-weight: bold;">Girl\'s Special Hostels</p>';
 
-        echo '<table class="table table-bordered noprint" border="2" cell cellspacing="15" cellpadding="5" width="1000"> 
-        <thead class="thead-light"> 
-            <th> <font face="Arial">Hostel Name</font> </th> 
-            <th> <font face="Arial">Number of Rooms</font> </th> 
-            <th> <font face="Arial">Room Type</font> </th> 
-            <th> <font face="Arial">Maximum Capacity</font> </th> 
-            <th> <font face="Arial">Occupant</font> </th> 
-            <th> <font face="Arial">Remark</font> </th> 
-            <th> <font face="Arial">Request</font> </th> 
-
-        </thead>';
-
-
-        if ($result = $conn->query($query)) {
-            while ($row = mysqli_fetch_assoc($result)) {
+        if (empty($tableNames)) {
+            echo 'No special hostels found.';
+        } else{
+            foreach ($tableNames as $tableName) {
+                echo '<table class="table table-bordered noprint" border="2" cell cellspacing="15" cellpadding="5" width="1000"> 
+                <thead class="thead-light"> 
+                    <tr colspan = "7"><th>' .$tableName. '</th></tr>
+                    <th> <font face="Arial">Hostel Name</font> </th> 
+                    <th> <font face="Arial">Number of Rooms</font> </th> 
+                    <th> <font face="Arial">Room Type</font> </th> 
+                    <th> <font face="Arial">Maximum Capacity</font> </th> 
+                    <th> <font face="Arial">Occupant</font> </th> 
+                    <th> <font face="Arial">Remark</font> </th> 
+                    <th> <font face="Arial">Request</font> </th> 
+    
+                </thead>';
+    
+    
+                $available = "SELECT t.* FROM $tableName t
+                            INNER JOIN (
+                            SELECT DISTINCT room_no
+                            FROM $tableName
+                            WHERE name IS NULL AND matric_no IS NULL
+                            ) sub
+                            ON t.room_no = sub.room_no";
+                $availableResult = $conn->query($available);
+                if ($availableResult) {
+                        while ($row = mysqli_fetch_assoc($availableResult)) {
                             $hostel = $row["hostel"];
                             $no_of_rooms = $row["no_of_rooms"];
                             $room_type = $row["room_type"];
@@ -153,85 +169,83 @@ if (session_status() == PHP_SESSION_NONE) {
                                     <td>'.$max_capacity.'</td> 
                                     <td>'.$occupant.'</td> 
                                     <td>'.$remark.'</td> 
-                                    <td>
-                                    <form action="selectroom.php" method="POST">
-                                        <input type="hidden" name="hostel" value="'.$hostel.'">
-                                        <button type="submit" name="select_room" id="select_room" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= "padding: 12px 15px;
-                                        max-width:150px; 
-                                        max-height:40px; 
-                                        font-size: 13px;
-                                        white-space: nowrap;
-                                        vertical-align: middle;
-                                        text-align:left;">Choose This Block</button></form>
-                                    </td>
-
                                 </tr>';
                         }
                     $result->free();
                 } else{
                     echo 'No free rooms';
+                    break;
                 }
+                
+            }
+        }
         echo '</table></br></br>';   
-  
-    }
-
+        }
 
     if ($gender === 'Male') {
 
-        $query = "SELECT * FROM boys_special";
+        $query = "SELECT hostel FROM boys_special";
 
         $result = $conn->query($query);
-    
-
+        while ($row = $result->fetch_assoc()) {
+            $tableNames[] = $row["hostel"];
+        }
+     
         echo '<p style="font-weight: bold;">Boy\'s Special Hostels</p>';
 
         echo '<table class="table table-bordered noprint" border="2" cell cellspacing="15" cellpadding="5" width="1000"> 
-        <thead class="thead-light"> 
-            <th> <font face="Arial">Hostel Name</font> </th> 
-            <th> <font face="Arial">Number of Rooms</font> </th> 
-            <th> <font face="Arial">Room Type</font> </th> 
-            <th> <font face="Arial">Maximum Capacity</font> </th> 
-            <th> <font face="Arial">Occupant</font> </th> 
-            <th> <font face="Arial">Remark</font> </th> 
-            <th> <font face="Arial">Request</font> </th> 
+            <thead class="thead-light"> 
+                <th> <font face="Arial">Hostel Name</font> </th> 
+                <th> <font face="Arial">Number of Rooms</font> </th> 
+                <th> <font face="Arial">Room Type</font> </th> 
+                <th> <font face="Arial">Maximum Capacity</font> </th> 
+                <th> <font face="Arial">Occupant</font> </th> 
+                <th> <font face="Arial">Remark</font> </th> 
+            </thead>';
 
-        </thead>';
+        if (empty($tableNames)) {
+            echo 'No special hostels found.';
+        }
+        else{
+            foreach ($tableNames as $tableName) {
+                $available = "SELECT t.* FROM $tableName t
+                            INNER JOIN (
+                            SELECT DISTINCT room_no
+                            FROM $tableName
+                            WHERE name IS NULL AND matric_no IS NULL
+                            ) sub
+                            ON t.room_no = sub.room_no";
+                  $availableResult = $conn->query($available);
+                if ($availableResult) {
+                    echo 'HI';
+                    var_dump($matric_no);
+                    while ($row = mysqli_fetch_assoc($availableResult)) {
+                        $hostel = $row["hostel"];
+                        $no_of_rooms = $row["no_of_rooms"];
+                        $room_type = $row["room_type"];
+                        $max_capacity = $row["max_capacity"];
+                        $occupant = $row["occupant"]; 
+                        $remark = $row["remark"]; 
 
-
-        if ($result = $conn->query($query)) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                            $hostel = $row["hostel"];
-                            $no_of_rooms = $row["no_of_rooms"];
-                            $room_type = $row["room_type"];
-                            $max_capacity = $row["max_capacity"];
-                            $occupant = $row["occupant"]; 
-                            $remark = $row["remark"]; 
-
-                            echo '<tr> 
-                                    <td>'.$hostel.'</td> 
-                                    <td>'.$no_of_rooms.'</td> 
-                                    <td>'.$room_type.'</td> 
-                                    <td>'.$max_capacity.'</td> 
-                                    <td>'.$occupant.'</td> 
-                                    <td>'.$remark.'</td> 
-                                    <td>
-                                    <form action="selectroom.php" method="POST">
-                                        <input type="hidden" name="hostel" value="'.$hostel.'">
-                                        <button type="submit" name="select_room" id="select_room" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= "padding: 12px 15px;
-                                        max-width:150px; 
-                                        max-height:40px; 
-                                        font-size: 13px;
-                                        white-space: nowrap;
-                                        vertical-align: middle;
-                                        text-align:left;">Choose This Block</button></form>
-                                    </td>
-    
-                                </tr>';
-                        }
+                        echo '<tr> 
+                                <td>'.$hostel.'</td> 
+                                <td>'.$no_of_rooms.'</td> 
+                                <td>'.$room_type.'</td> 
+                                <td>'.$max_capacity.'</td> 
+                                <td>'.$occupant.'</td> 
+                                <td>'.$remark.'</td> 
+                            </tr>';
+                        
+                    }
                     $result->free();
-                } else{
+                } 
+                else{
                     echo 'No free rooms';
+                    break;
                 }
+                
+            }
+        }
         echo '</table></br></br>';   
         }
 ?>

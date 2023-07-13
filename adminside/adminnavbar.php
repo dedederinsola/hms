@@ -63,7 +63,7 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="hostelpayments.php" class="nav-link"><i class="fas fa-angle-right"></i>Hostel View</a>
+                                    <a href="hosteldata.php" class="nav-link"><i class="fas fa-angle-right"></i>Old Occupancy Data</a>
                                 </li>
   <li class="nav-item">
                                     <a href="oldcomplaints.php" class="nav-link"><i class="fas fa-angle-right"></i>Resolved Complaints</a>
