@@ -7,7 +7,7 @@ Hello! This hostel management system is modelled after an existing portal. The o
 2. Make a complaint concerning the hostel facilities.
 3. Request a non standard room.
 
-**Hostel Officers (adminside) **
+**Hostel Officers (adminside)**
 1. View all complaints and click a button to resolve them.
 2. View historical complaint and occupancy data.
 3. Sign Students out of the hostel
