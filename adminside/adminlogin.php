@@ -33,16 +33,21 @@ mysqli_stmt_bind_param($stmt, 'ss', $employee_id, $password);
 
 // Execute the prepared statement
 mysqli_stmt_execute($stmt);
-var_dump($result);
+// var_dump($result);
 
 // Get the result from the prepared statement
 $result = mysqli_stmt_get_result($stmt);
-var_dump($row);
 
 // Check if there is a row returned
 if (mysqli_num_rows($result) == 1) {
+  if ($employee_id == 'Superadmin') {
+    header('Location: superadmin.php');
+    $_SESSION['employee_id'] = 'Superadmin';
+  }
+  else {
     header('Location: admincomplaints.php');
-  exit;
+  }
+    exit;
 } else {
   // Invalid username or password
   $error = "Invalid username or password";

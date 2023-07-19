@@ -105,14 +105,15 @@ if (session_status() == PHP_SESSION_NONE) {
     $conn = new mysqli("localhost", $user, $password, $database); 
 
     $rooms = NULL;
-    
+    $remark = NULL;
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['hostel']) && !empty($_POST['hostel'])){
             $hostel = $_POST['hostel'];
         }
 
-        $sql = "SELECT DISTINCT room_no
-                FROM osun
+        $sql = "SELECT DISTINCT room_no, remark
+                FROM $hostel
                 WHERE name IS NULL AND matric_no IS NULL";
         
         $rooms = $conn->query($sql);
@@ -121,18 +122,22 @@ if (session_status() == PHP_SESSION_NONE) {
             echo '<table class="table table-bordered noprint" border="2" cell cellspacing="15" cellpadding="5" width="1000"> 
             <thead class="thead-light"> 
                 <th> <font face="Arial">Room Number</font> </th> 
+                <th> <font face="Arial">Remark</font> </th> 
                 <th> <font face="Arial">Select</font> </th> 
             </thead>';
 
             while ($row = mysqli_fetch_assoc($rooms)) {
                 $room_no = $row['room_no'];
+                $remark = $row['remark'];
 
                 echo '<tr>
                         <td>' .$room_no. '</td>
+                        <td>' .$remark. '</td>
                         <td>
                             <form action="requestroom.php" method="POST">
+                            <input type="hidden" name="hostel" value="'.$hostel.'">
                             <input type="hidden" name="room_no" value="'.$room_no.'">
-                            <button type="submit" name="select_room" id="select_room" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= "padding: 12px 15px;
+                            <button type="submit" name="selectroom" id="selectroom" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= "padding: 12px 15px;
                             max-width:150px; 
                             max-height:40px; 
                             font-size: 13px;

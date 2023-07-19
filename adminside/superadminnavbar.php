@@ -2,7 +2,7 @@
                     <ul class="nav nav-sidebar-menu sidebar-toggle-view">
                        
                         <li class="nav-item">
-                            <a href="dashboard!.php" class="nav-link"><i class="flaticon-dashboard"></i><span>Dashboard</span></a>
+                            <a href="#" class="nav-link"><i class="flaticon-dashboard"></i><span>Dashboard</span></a>
                         </li>
 
                         <li class="nav-item sidebar-nav-item">
@@ -40,7 +40,7 @@
                                 
                             </ul>
                         </li>
-                        <li class="nav-item sidebar-nav-item">
+                        <!-- <li class="nav-item sidebar-nav-item">
                             <a href="#" class="nav-link"><i class="flaticon-classmates"></i><span>Security</span></a>
                             <ul class="nav sub-group-menu">
                                 <li class="nav-item">
@@ -51,27 +51,17 @@
                                 </li>
                                 
                             </ul>
-                        </li>
+                        </li> -->
                         <li class="nav-item sidebar-nav-item">
                             <a href="#" class="nav-link"><i class="flaticon-bed"></i><span>Hostel</span></a>
                             <ul class="nav sub-group-menu">
                                 <li class="nav-item">
-                                    <a href="roomallocation.php" class="nav-link"><i class="fas fa-angle-right"></i>Standard Hostel Allocation</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="hostelview.php" class="nav-link"><i class="fas fa-angle-right"></i>Special Hostels Allocation</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="complaint!.html" class="nav-link"><i class="fas fa-angle-right"></i>Make Complaint</a>
+                                    <a href="roomrequests.php" class="nav-link"><i class="fas fa-angle-right"></i>Room Applications</a>
                                 </li>
 
-                                <!-- <li class="nav-item">
-                                    <a href="medical.php" class="nav-link"><i class="fas fa-angle-right"></i>View Medical Report</a>
-                                </li>
                                 <li class="nav-item">
-                                    <a href="viewbursary.php" class="nav-link"><i class="fas fa-angle-right"></i>View Bursary Report</a>
-                                </li> -->
-                                
+                                    <a href="hosteldata.php" class="nav-link"><i class="fas fa-angle-right"></i>Old Occupancy Data</a>
+                                </li>                                
                             </ul>
                         </li>
 

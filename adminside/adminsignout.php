@@ -27,6 +27,43 @@
     <script src="js/modernizr-3.6.0.min.js"></script>
     <script src="js/jsnew.js"></script>
 
+    <style>
+    .search-wrapper {
+        display: flex;
+        /* max-width: 1000px; Limit the maximum width of the search box to 1000px */
+        margin: 0 auto; /* Center the search box horizontally */
+        /* border: 1px solid #ccc; Optional border for visual clarity */
+        border-radius: 5px; /* Rounded corners (optional) */
+        overflow: hidden; /* Prevents content overflow */
+    }
+
+    #parameter {
+    flex: 0; /* Allow the dropdown to take up available space */
+    border-radius: 5px 0 0 5px; /* Apply rounded corners to the left side */
+    border: none;
+    border-right: 1px solid #ccc; /* Add a border on the right side */
+    padding: 7px;
+    width: auto; /* Remove min-width and set width to auto */
+    white-space: nowrap; /* Prevent the button from wrapping text to the next line */
+    }
+    
+    input[name='search-box'] {
+        flex: 1; /* Allow the input to take up available space */
+        height: 40px;
+        border: 1px 0px 1px 0px solid #ccc; /* Remove the input border */
+        padding: 7px;
+    }
+
+    #sign-out-button {
+        height: 40px;
+        border-radius: 0 5px 5px 0; /* Apply rounded corners to the right side */
+        white-space: nowrap; /* Prevent the button from wrapping text to the next line */
+        overflow: hidden; /* Hide any overflowing text inside the button */
+        vertical-align: middle;
+    }
+    </style>
+
+
 
     <!-- Bootstrap core CSS
     <link href="dashboardbootstrap.css" rel="stylesheet"> -->
@@ -92,15 +129,11 @@
         <!-- Keep all page content within the page-content inset div! -->
         <div class="page-content inset">
             <form action = '<?php echo $_SERVER['PHP_SELF']; ?>' method= 'post'>
-                <label for="search-box">Matric Number:</label>
+            <div class="search-wrapper">
+                <label for="search-box" name="parameter" id="parameter">Matric Number:</label>
                 <input type="text" name= 'search-box'/>
-                <button type='submit' name="vacate" id="sign-out-button" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style="padding: 12px 15px;
-                max-width:150px; 
-                max-height:40px; 
-                font-size: 13px;
-                white-space: nowrap;
-                vertical-align: middle;
-                text-align:left;">Search</button>
+                <button type='submit' name="vacate" id="sign-out-button" class="btn-fill-lg bg-blue-dark btn-hover-yellow">Search</button>
+            </div>
             </form>
 
         <?php 

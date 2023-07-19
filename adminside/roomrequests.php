@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Resolved Complants</title>
+    <title>Active Complants</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
@@ -26,8 +26,6 @@
     <!-- Modernize js -->
     <script src="js/modernizr-3.6.0.min.js"></script>
     <script src="js/jsnew.js"></script>
-
-
 
 
     <!-- Bootstrap core CSS
@@ -79,66 +77,73 @@
                   <a href="#"><img src="logo.png" alt="logo"></a>
                   </div>
               </div>
-              <?php 
-                if (isset($_SESSION['employee_id'])) {
-                    include "superadminnavbar.php";
-                } else {
-                    include "adminnavbar.php"; 
-                }
-                ?>
+              <?php include "superadminnavbar.php"; ?>
           </div>
           <!-- Sidebar Area End Here -->
 
         <div class="dashboard-content-one">
                 <!-- Breadcubs Area Start Here -->
                 <div class="breadcrumbs-area">
-                    <h3>Occupancy Data</h3>
+                    <h3>SuperAdmin Dashboard</h3>
                 </div>
         <!-- Keep all page content within the page-content inset div! -->
         <div class="page-content inset">
+        <?php 
+        $user = "root"; 
+        $password = ""; 
+        $database = "crawford_uni"; 
+        $conn = new mysqli("localhost", $user, $password, $database); 
+        $query = "SELECT * FROM p_o_p WHERE approved IS NULL";
 
-
-            <?php 
-            $user = "root"; 
-            $password = ""; 
-            $database = "crawford_uni"; 
-            $mysqli = new mysqli("localhost", $user, $password, $database); 
-            $query = "SELECT * FROM old_occupancy";
-
-
-            echo '<table class="table table-bordered noprint" border="2" cell cellspacing="15" cellpadding="5" width="1000"> 
+        echo '<table class="table table-bordered noprint" border="2" border="2" cell cellspacing="15" cellpadding="5" width="1000"> 
             <thead class="thead-light"> 
-                <th> <font face="Arial">Hostel</font> </th> 
-                <th> <font face="Arial">Room</font> </th> 
+                <th> <font face="Arial">Matric No</font> </th> 
                 <th> <font face="Arial">Name</font> </th> 
-                <th> <font face="Arial">Matric No</font></th>
-                <th> <font face="Arial">Sign In</font></th> 
-                <th> <font face="Arial">Sign Out</font></th> 
-
+                <th> <font face="Arial">Hostel</font> </th>
+                <th> <font face="Arial">Proof</font> </th> 
+                <th> <font face="Arial">Approved?</font> </th>
             </thead>';
 
-            if ($result = $mysqli->query($query)) {
-                while ($row = $result->fetch_assoc()) {
-                    $hostel = $row["hostel"];
-                    $room_no = explode(' ', $row['room_no'])[1];
-                    $name = $row["name"];
-                    $matric_no = $row["matric_no"];
-                    $date_allocated = $row["date_allocated"];
-                    $date_sign_out = $row["date_sign_out"];
-
-                    echo '<tr> 
-                            <td>'.$hostel.'</td> 
-                            <td>'.$room_no.'</td> 
-                            <td>'.$name.'</td> 
-                            <td>'.$matric_no.'</td> 
-                            <td>'.$date_allocated.'</td> 
-                            <td>'.$date_sign_out.'</td> 
-                        </tr>';
-                }
-                $result->free();
+        if ($result = $conn->query($query)) {
+            if ($result->num_rows == 0) {
+                $message = 'No requests';
             }
-            
-            ?>
+
+            while ($row = $result->fetch_assoc()) {
+                $matric_no = $row["matric_no"];
+                $name = $row["name"];
+                $hostel = $row["hostel"] . ' ' . $row["room_no"];
+                $approved = $row["approved"]; 
+
+                
+
+                echo '<tr> 
+                        <td>'.$matric_no.'</td> 
+                        <td>'.$name.'</td> 
+                        <td>'.$hostel.'</td>
+                        <td><a href="viewproof.php?matric_no='.$matric_no.'">View Proof</a></td> 
+                        <td>
+                            <form action="approved.php" method="POST">
+                                <input type="hidden" name="matric_no" value="'.$matric_no.'">
+                                <input type="hidden" name="name" value="'.$name.'">
+                                <input type="hidden" name="hostel" value="'.$hostel.'">
+
+                                <button type="submit" name="approve" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= " padding: 12px 15px; max-width:150px; max-height:40px; font-size: 13px; white-space: nowrap; vertical-align: middle; text-align:left;">Approve</button>
+
+                                <button type="submit" name="deny" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= " padding: 12px 15px; max-width:150px; max-height:40px; font-size: 13px; white-space: nowrap; vertical-align: middle; text-align:left;">Deny</button></form>
+
+                            </form>
+                        </td>
+                    </tr>';
+            }
+            $result->free();
+            echo '</table>';
+        } 
+        // if (!empty($message)) {
+        //     echo $message;
+        // }
+        ?>
+
         </div>
       </div>
       

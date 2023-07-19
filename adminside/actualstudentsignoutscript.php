@@ -44,10 +44,10 @@ function vacateStudentFromRoom($matric_no, $name, $gender, $level, $conn) {
     
     // Define the table names array based on gender and level conditions
 
-    
+
     $tableNames = [];
     $occupant = [];
-
+    
 
 
     if ($gender === 'Male') {
@@ -170,7 +170,7 @@ function vacateStudentFromRoom($matric_no, $name, $gender, $level, $conn) {
     // else{
     //     echo 'What is your gender?';
     // }
-    
+
 
     if (empty($tableNames)) {
     // Invalid gender or level

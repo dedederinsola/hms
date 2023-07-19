@@ -5,6 +5,11 @@ if (session_status() == PHP_SESSION_NONE) {
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 }
+
+if (!empty($_SESSION['room_no'])) {
+    header('Location: dashboard!.php');
+}
+
 ?>
 <html>
 <head>
@@ -99,11 +104,11 @@ if (session_status() == PHP_SESSION_NONE) {
 
 
 <?php 
-    $user = "root"; 
-    $password = ""; 
-    $database = "crawford_uni"; 
-    $conn = new mysqli("localhost", $user, $password, $database); 
-    $tableNames =[];
+    // $user = "root"; 
+    // $password = ""; 
+    // $database = "crawford_uni"; 
+    // $conn = new mysqli("localhost", $user, $password, $database); 
+    // $tableNames =[];
 
     $gender = $_SESSION['gender'];
 
@@ -113,6 +118,7 @@ if (session_status() == PHP_SESSION_NONE) {
     $max_capacity = NULL;
     $occupant = NULL; 
     $remark = NULL; 
+
 
 
 

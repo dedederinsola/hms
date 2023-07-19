@@ -3,6 +3,7 @@ require 'studentdetailsMySQLi.php';
 
 require 'allocationalgo.php';
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

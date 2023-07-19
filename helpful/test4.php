@@ -1,21 +1,56 @@
 <?php
-    include 'studentdetailsMySQLi.php';
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['hostel']) && isset($_POST['room_no'])){
-        $hostel = $_POST['hostel'];
-        $room_no = $_POST['room_no'];
-    }
+// Set database connection parameters
+$host = 'localhost';
+$user = 'root';
+$password = '';
+$dbname = 'crawford_uni';
+
+// Connect to the database using MySQLi
+$conn = new mysqli($host, $user, $password, $dbname);
+if ($conn->connect_error) {
+    die('Connection failed: ' . $conn->connect_error);
 }
 
-$message = NULL;
+
+    if (empty($_FILES['image'])) {
+        $message = "Upload an image";
+    }
+
+    $validExtensions = ['jpeg', 'jpg', 'png'];
+    $imageTemp = $_FILES['image']['tmp_name'];
+    $imageExtension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+
+
+    if (!in_array($imageExtension, $validExtensions)) {
+        $message = "Only JPEG, JPG, and PNG files are allowed.";
+    } else {
+
+
+        $imageData = file_get_contents($imageTemp);
+
+        if (empty($imageData)){
+            echo "no picture found";
+        }
+
+    }
+
+// else {
+//     die ('Error executing query :' . $conn->errorInfo()[2] );
+
+// }
+
+// Close the database connection
+$conn->close();
 
 ?>
+
 
 
 <html>
@@ -182,5 +217,81 @@ $message = NULL;
         $("#wrapper").toggleClass("active");
     });
     </script> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <div class="search-wrapper">
+                    <select name="parameter" id="parameter" >
+                        <option value="matric_no">Matric Number</option>
+                        <option value="hostel">Hostel</option>
+                        <option value="name">Student Name</option>
+                    </select>
+                    <input type="text" name="search-box" />
+                    <button type="submit" name="search" id="sign-out-button" class="btn-fill-lg bg-blue-dark btn-hover-yellow">Search</button>
+                </div>
+            </form>
+
 </body>
-</html>
+</html>\
+
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+                if (isset($_POST['search'])) {
+
+                    $value = $_POST['parameter'];
+
+                    if ($_POST['parameter'] === "Hostel") {
+                        $_SESSION['searchbox'] = str_replace(' ', '_', $_POST['search-box']);
+                    } else {
+                        $_SESSION['searchbox'] = $_POST['search-box'];
+                    }
+                    
+                    
+                    
+                    $search = "SELECT * FROM old_occupancy WHERE $value = ?";
+
+                    if ($stmt = $mysqli->prepare($search)) {
+                        $stmt->bind_param("s", $_SESSION['searchbox']);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        while ($row = $result->fetch_assoc()) {
+                            $hostel = $row["hostel"];
+                            $room_no = explode(' ', $row['room_no'])[1];
+                            $name = $row["name"];
+                            $matric_no = $row["matric_no"];
+                            $date_allocated = $row["date_allocated"];
+                            $date_sign_out = $row["date_sign_out"];
+        
+                            echo '<tr> 
+                                    <td>'.$hostel.'</td> 
+                                    <td>'.$room_no.'</td> 
+                                    <td>'.$name.'</td> 
+                                    <td>'.$matric_no.'</td> 
+                                    <td>'.$date_allocated.'</td> 
+                                    <td>'.$date_sign_out.'</td> 
+                                </tr>';
+                        }
+                        $result->free();
+                    }
+        
+
+
+                }
+            }
+
