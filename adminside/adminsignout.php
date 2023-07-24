@@ -1,3 +1,6 @@
+<?php 
+    include 'connectMySQLi.php';
+?>
 <html>
 <head>
     <meta charset="utf-8">
@@ -72,9 +75,7 @@
     <link href="dashboard.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
  -->
-    <?php 
-        include 'connectMySQLi.php';
-    ?>
+
   </head>
 
   <body>

@@ -120,11 +120,16 @@ $message = NULL;
                             <p>Only upload JPG, JPEG or PNG files</p>
                             <input type="file" name="image" accept="image/jpeg, image/jpg, image/png" />
                             <input type='hidden' name='matric_no' value="<?php echo $_SESSION['matric_no']?>" />
+
                             <input type="hidden" name="hostel" value="<?php echo $hostel; ?>">
+
                             <input type="hidden" name="room_no" value="<?php echo $room_no; ?>">
+
                             </br></br></br>
+
                             <button type="submit" name="upload" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= "padding: 12px 15px;max-width:150px; max-height:40px; font-size: 13px; white-space: nowrap; vertical-align: middle; text-align:left;">Upload</button></br>
                             </br></br></br>
+                            
                             <span class="success" style="font-weight:bold; display: block; text-align: center;"><?php echo $message; ?></span>
                         </form>
                     </td>

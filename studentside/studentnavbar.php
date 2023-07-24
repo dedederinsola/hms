@@ -62,7 +62,7 @@
                                     <a href="hostelview.php" class="nav-link"><i class="fas fa-angle-right"></i>Special Hostels Allocation</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="complaint!.html" class="nav-link"><i class="fas fa-angle-right"></i>Make Complaint</a>
+                                    <a href="complaint!.php" class="nav-link"><i class="fas fa-angle-right"></i>Make Complaint</a>
                                 </li>
 
                                 <!-- <li class="nav-item">

@@ -3,6 +3,11 @@
 include 'studentdetailsMySQLi.php';
 
 
+
+echo 'please nau';
+var_dump($matric_no, $_POST['hostel'], $_POST['room_no']);
+
+
 if (isset($_POST['upload'])) {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['hostel']) && isset($_POST['room_no'])) {
@@ -18,7 +23,7 @@ if (isset($_POST['upload'])) {
     } else {
         echo 'why';
         die ('Error executing query :' .$conn->error());
-    }
+    } 
 
 
     $sql = mysqli_prepare($conn, "SELECT * FROM p_o_p WHERE matric_no = ?");
@@ -40,7 +45,7 @@ if (isset($_POST['upload'])) {
     $imageTemp = $_FILES['image']['tmp_name'];
     if (empty($_FILES['image'])) {
         $message = "Upload an image";
-        include 'requestroom.html';
+        include 'requestroom.php';
     }
 
     $imageExtension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
@@ -48,12 +53,11 @@ if (isset($_POST['upload'])) {
     
 
 
-
     if (!in_array($imageExtension, $validExtensions)) {
         $message = "Only JPEG, JPG, and PNG files are allowed.";
         include 'requestroom.php';
         exit();
-        ;
+
     } else {
         $imageData = file_get_contents(addslashes($imageTemp));
 
@@ -80,11 +84,12 @@ if (isset($_POST['upload'])) {
         // Close the statement
         $stmt->close();
     }
-} 
-// else {
-//     die ('Error executing query :' . $conn->errorInfo()[2] );
+} else {
+    echo 'why';
+    // var_dump($matric_no, $name, $hostel, $room_no);
+    // die ('Error executing query :' .$conn->error());
+}
 
-// }
 
 // Close the database connection
 $conn->close();

@@ -3,6 +3,7 @@ require 'studentdetailsPDO.php';
 
 $matric_no = $_SESSION['matric_no'];
 $name = $_SESSION['name'];
+$room_no = $_SESSION['room_no'];
 
 // Function to assign a room to the student
 function assignRoomToStudent($matric_no, $name, $conn) {
@@ -172,14 +173,28 @@ function assignRoomToStudent($matric_no, $name, $conn) {
     }
 }
 // Check if the student already has a room assigned
-$sql = "SELECT room_no FROM students WHERE matric_no = :matric_no";
+$sql = "SELECT room_no FROM students WHERE matric_no = :matric_no
+UNION 
+SELECT name FROM p_o_p WHERE matric_no = :matric_no";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':matric_no', $matric_no);
 $stmt->execute();
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
-$room_no = $result['room_no'];
 
-if ($room_no === null) {
+$rooms_and_names = array();
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $rooms_and_names[] = $row;
+}
+
+$has_null_values = false;
+foreach ($rooms_and_names as $row) {
+    if ($row === null) {
+        $has_null_values = true;
+        break;
+    }
+}
+
+
+if ($has_null_values) {
     // Assign a room
     $assigned_room = assignRoomToStudent($matric_no, $name, $conn);
     if ($assigned_room) {
@@ -191,7 +206,11 @@ if ($room_no === null) {
     }
 } else {
     // Student already has a room assigned
-    $assigned_room = $room_no;
-    $message = $assigned_room;
+    if ($room_no != NULL){
+        $assigned_room = $room_no;
+        $message = $assigned_room;
+    } else {
+        $message = 'You have already requested a room';
+    }
 }
 ?>

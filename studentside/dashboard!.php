@@ -1,5 +1,5 @@
 <?php
-require 'studentdetailsPDO.php';
+require 'studentdetailsMySQLi.php';
 ?>
 
 <!DOCTYPE html>

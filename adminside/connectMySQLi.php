@@ -13,7 +13,7 @@ $dbname = 'crawford_uni';
 
 // Connect to the database using MySQLi
 $conn = new mysqli($host, $user, $password, $dbname);
-if ($conn->error) {
-    die('Connection failed: ' . $conn->error);
+if ($conn->connect_error) {
+    die('Connection failed: ' . $conn->connect_error);
 }
 ?>

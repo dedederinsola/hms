@@ -2,16 +2,19 @@
 
 require 'connectMySQLi.php';
 
+$matric_no = $_POST['matric_no'];
+$name = $_POST['name'];
+$parts = explode(' ', $_POST['hostel']);
+$hostel = $parts[0];
+$room_no = $parts[1];
+
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     if (isset($_POST['approve'])) {
-        $matric_no = $_POST['matric_no'];
-        $name = $_POST['name'];
-        $hostel = $_POST['hostel'];
-
-        var_dump($matric_no, $name);
 
         // if (isset($_POST['hostel']) && isset($_POST['room_no'])) {
-        $sql = "UPDATE p_o_p SET approved = 'yes' WHERE matric_no = $matric_no";
+        $sql = "UPDATE oldpop SET approved = 'yes' WHERE matric_no = $matric_no";
 
 
 
@@ -20,20 +23,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
         } else {
             echo 'why not:';
+            echo 'Query execution failed: ' . $conn->error;
+            var_dump($matric_no, $name);
         }
     }
 
 
     if (isset($_POST['deny'])) {
-        $matric_no = $_POST['matric_no'];
-        $name = $_POST['name'];
-        $hostel = $_POST['hostel'];
 
         // if (isset($_POST['hostel']) && isset($_POST['room_no'])) {
-        $sql = "UPDATE p_o_p SET approved = 'no' WHERE matric_no = $matric_no";
+        $sql = "UPDATE oldpop SET approved = 'no' WHERE matric_no = $matric_no";
 
         if ($conn->query($sql) === TRUE){
             header('Location: roomrequests.php');
+
+        } else {
+            echo 'please nau';
+            echo 'Query execution failed: ' . $conn->error;
+
+            var_dump($matric_no, $name);
 
         }
     }

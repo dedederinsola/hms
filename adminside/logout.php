@@ -12,6 +12,6 @@ session_unset();
 session_destroy();
 
 // Redirect to the login page
-header('Location: ../studentside/login.html');
+header('Location: adminlogin.html');
 exit();
 ?>

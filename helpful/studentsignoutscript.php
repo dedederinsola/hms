@@ -1,8 +1,5 @@
 <?php 
-        $user = "root"; 
-        $password = ""; 
-        $database = "crawford_uni"; 
-        $mysqli = new mysqli("localhost", $user, $password, $database); 
+        include_once 'connectMySQLi.php';
         $query = "SELECT * FROM students";
 
 

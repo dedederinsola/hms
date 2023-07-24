@@ -1,3 +1,6 @@
+<?php
+include_once 'connectMySQLi.php';
+?>
 <html>
 <head>
     <meta charset="utf-8">
@@ -89,10 +92,6 @@
         <!-- Keep all page content within the page-content inset div! -->
         <div class="page-content inset">
         <?php 
-        $user = "root"; 
-        $password = ""; 
-        $database = "crawford_uni"; 
-        $conn = new mysqli("localhost", $user, $password, $database); 
         $query = "SELECT * FROM p_o_p WHERE approved IS NULL";
 
         echo '<table class="table table-bordered noprint" border="2" border="2" cell cellspacing="15" cellpadding="5" width="1000"> 
@@ -127,6 +126,7 @@
                                 <input type="hidden" name="matric_no" value="'.$matric_no.'">
                                 <input type="hidden" name="name" value="'.$name.'">
                                 <input type="hidden" name="hostel" value="'.$hostel.'">
+                                
 
                                 <button type="submit" name="approve" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= " padding: 12px 15px; max-width:150px; max-height:40px; font-size: 13px; white-space: nowrap; vertical-align: middle; text-align:left;">Approve</button>
 

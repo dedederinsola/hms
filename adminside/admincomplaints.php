@@ -1,3 +1,7 @@
+<?php
+include_once 'connectMySQLi.php';
+
+?>
 <html>
 <head>
     <meta charset="utf-8">
@@ -90,10 +94,6 @@
         <div class="page-content inset">
 
         <?php 
-        $user = "root"; 
-        $password = ""; 
-        $database = "crawford_uni"; 
-        $conn = new mysqli("localhost", $user, $password, $database); 
         $query = "SELECT * FROM activecomplaints";
 
         echo '<table class="table table-bordered noprint" border="2" border="2" cell cellspacing="15" cellpadding="5" width="1000"> 

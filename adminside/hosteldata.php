@@ -1,3 +1,6 @@
+<?php
+include_once 'connectMySQLi.php';
+?>
 <html>
 <head>
     <meta charset="utf-8">
@@ -99,10 +102,6 @@
 
 
             <?php 
-            $user = "root"; 
-            $password = ""; 
-            $database = "crawford_uni"; 
-            $mysqli = new mysqli("localhost", $user, $password, $database); 
             $query = "SELECT * FROM old_occupancy";
 
 
@@ -117,7 +116,7 @@
 
             </thead>';
 
-            if ($result = $mysqli->query($query)) {
+            if ($result = $conn->query($query)) {
                 while ($row = $result->fetch_assoc()) {
                     $hostel = $row["hostel"];
                     $room_no = explode(' ', $row['room_no'])[1];

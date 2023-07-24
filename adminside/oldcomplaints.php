@@ -1,3 +1,6 @@
+<?php
+include_once 'connectMySQLi.php';
+?>
 <html>
 <head>
     <meta charset="utf-8">
@@ -90,10 +93,6 @@
         <div class="page-content inset">
 
         <?php 
-        $user = "root"; 
-        $password = ""; 
-        $database = "crawford_uni"; 
-        $mysqli = new mysqli("localhost", $user, $password, $database); 
         $query = "SELECT * FROM resolvedcomplaints";
 
 
@@ -105,7 +104,7 @@
                 <th> <font face="Arial">Date/Time Resolved</font> </th> 
             </thead>';
 
-        if ($result = $mysqli->query($query)) {
+        if ($result = $conn->query($query)) {
             while ($row = $result->fetch_assoc()) {
                 $room_no = $row["room_no"];
                 $category = $row["category"];

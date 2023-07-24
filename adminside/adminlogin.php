@@ -1,21 +1,5 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-  session_start();
-  error_reporting(E_ALL);
-  ini_set('display_errors', 1);
-}
-
-// Database connection parameters
-$host = 'localhost';
-$user = 'root';
-$password = '';
-$dbname = 'crawford_uni';
-
-// Connect to the database
-$conn = mysqli_connect($host, $user, $password, $dbname);
-if (!$conn) {
-  die('Connection failed: ' . mysqli_connect_error());
-}
+require_once 'connectMySQLi.php';
 
 // Retrieve username and password from the form
 $employee_id = $_POST['employee_id'];
@@ -47,11 +31,11 @@ if (mysqli_num_rows($result) == 1) {
   else {
     header('Location: admincomplaints.php');
   }
-    exit;
+  exit;
 } else {
   // Invalid username or password
   $error = "Invalid username or password";
-  include("adminlogin.php");
+  include("adminlogin.html");
 }
 
 // Close the prepared statement
