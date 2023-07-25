@@ -1,13 +1,10 @@
 <?php
-    require 'studentdetailsMySQLi.php';
-
-    error_reporting(0);
+include_once 'connectMySQLi.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
-    <title>Complaint Form</title>
+    <title>Application History</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
@@ -83,82 +80,58 @@
                   <a href="#"><img src="logo.png" alt="logo"></a>
                   </div>
               </div>
-              <div class="sidebar-menu-content">
-                <?php require "studentnavbar.php"; ?>
-            </div>
-        </div>
+              <?php include "superadminnavbar.php"; ?>
+          </div>
           <!-- Sidebar Area End Here -->
 
         <div class="dashboard-content-one">
                 <!-- Breadcubs Area Start Here -->
                 <div class="breadcrumbs-area">
-                    <h3>Log A Complaint</h3>
+                    <h3>Application History</h3>
                 </div>
         <!-- Keep all page content within the page-content inset div! -->
         <div class="page-content inset">
+        <?php 
+        $query = "SELECT * FROM oldpop";
+
+        echo '<table class="table table-bordered noprint" border="2" border="2" cell cellspacing="15" cellpadding="5" width="1000"> 
+            <thead class="thead-light"> 
+                <th> <font face="Arial">Matric No</font> </th> 
+                <th> <font face="Arial">Name</font> </th> 
+                <th> <font face="Arial">Hostel</font> </th>
+                <th> <font face="Arial">Proof</font> </th> 
+                <th> <font face="Arial">Approved?</font> </th>
+            </thead>';
+
+        if ($result = $conn->query($query)) {
+            if ($result->num_rows == 0) {
+                $message = 'No requests';
+            }
+
+            while ($row = $result->fetch_assoc()) {
+                $matric_no = $row["matric_no"];
+                $name = $row["name"];
+                $hostel = $row["hostel"] . ' ' . $row["room_no"];
+                $approved = $row["approved"]; 
+
             
-        <table cellspacing="200" cellpadding="20">
-            <form action="complaint.php" method="post">
-            <!-- <tr>
-                <td>
-                    <label for="room_no">Room Number:</label>
-                </td>
 
-                <td>
-                    <input type="text" name="room_no" /><br>
-                </td>
-            </tr> -->
+                echo '<tr> 
+                        <td>'.$matric_no.'</td> 
+                        <td>'.$name.'</td> 
+                        <td>'.$hostel.'</td>
+                        <td><a href="viewoldproof.php?matric_no='.$matric_no.'">View Proof</a></td> 
+                        <td>' . $approved . '</td>
+                    </tr>';
+            }
+            $result->free();
+            echo '</table>';
+        } 
+        // if (!empty($message)) {
+        //     echo $message;
+        // }
+        ?>
 
-            <tr>
-                <td>
-                    <label for="category">Category:</label>
-                </td>
-                <td>
-                    <select name="category" id="category">
-                    <option value="electrical">Electrical issues <span class="dpmenu">(e.g lights, sockets, fan)</span></option>
-                    <option value="woodwork">Carpentary issues <span class="dpmenu">(e.g doors, cupboards, fan)</span></option>
-                    <option value="bed">Bed issues <span class="dpmenu">(e.g bunks, mattress, window)</span></option>
-                    <option value="other">Other issues <span class="dpmenu">(e.g toilets, roof, window)</span></option>
-                </select><br>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <label for="description">Description of the problem:</label>
-                </td>
-                <td>
-                    <input type="text" name="description" style="min-height: 50px; width: 300px;"/><br>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <label for="date_time_available">Available time for repairs:</label>
-                </td>
-                <td>
-                    <input type="datetime-local" name="date_time_available" /><br>
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="2" style="text-align: center;">
-                    <button type="submit" class="btn-fill-lg bg-blue-dark btn-hover-yellow">Go</button>
-                </td>
-            </tr>
-
-            <tr>
-                <span class="success" style="color:green; font-weight:bold; display: block; text-align: center;"><?php echo $success; ?></span>
-                <span class="error" style="color:red; font-weight:bold; display: block; text-align: center;"><?php echo $error; ?></span>
-
-            </tr>
-            </form>
-            <!-- <div class="popup"" 
-            <?php //if (isset($_SESSION['form_submitted'])) { echo 'show'; } ?>
-            >
-              <p>Your complaint will be attended to.</p>
-            </div> -->
-        </table>
         </div>
       </div>
       
@@ -201,5 +174,5 @@
         $("#wrapper").toggleClass("active");
     });
     </script> -->
-  </body>
+</body>
 </html>

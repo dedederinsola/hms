@@ -30,6 +30,7 @@ if (mysqli_num_rows($result) == 1) {
   }
   else {
     header('Location: admincomplaints.php');
+    $_SESSION['employee_id'] = $employee_id;
   }
   exit;
 } else {

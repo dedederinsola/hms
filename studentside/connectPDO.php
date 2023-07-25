@@ -4,6 +4,11 @@ if (session_status() == PHP_SESSION_NONE) {
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 }
+
+// if (!isset($_SESSION['matric_no'])) {
+//     header('Location: login.php'); // Redirect to the dashboard or other appropriate page
+//     exit;
+// }
     
 // Set database connection parameters
 $host = 'localhost';

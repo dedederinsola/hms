@@ -55,19 +55,28 @@
                         <li class="nav-item sidebar-nav-item">
                             <a href="#" class="nav-link"><i class="flaticon-bed"></i><span>Hostel</span></a>
                             <ul class="nav sub-group-menu">
- <li class="nav-item">
+
+                                <li class="nav-item">
+                                    <a href="specialhostelview.php" class="nav-link"><i class="fas fa-angle-right"></i>Hostel View</a>
+                                </li>
+
+                                <li class="nav-item">
                                     <a href="admincomplaints.php" class="nav-link"><i class="fas fa-angle-right"></i>View Complaints</a>
                                 </li>
-<li class="nav-item">
-                                    <a href="adminsignout.php" class="nav-link"><i class="fas fa-angle-right"></i>Sign Students Out</a>
+
+                                <li class="nav-item">
+                                    <a href="oldcomplaints.php" class="nav-link"><i class="fas fa-angle-right"></i>Resolved Complaints</a>
                                 </li>
 
                                 <li class="nav-item">
                                     <a href="hosteldata.php" class="nav-link"><i class="fas fa-angle-right"></i>Old Occupancy Data</a>
                                 </li>
-  <li class="nav-item">
-                                    <a href="oldcomplaints.php" class="nav-link"><i class="fas fa-angle-right"></i>Resolved Complaints</a>
+
+                                <li class="nav-item">
+                                    <a href="adminsignout.php" class="nav-link"><i class="fas fa-angle-right"></i>Sign Students Out</a>
                                 </li>
+
+
                                 
                             </ul>
                         </li>

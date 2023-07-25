@@ -83,7 +83,7 @@ include_once 'connectMySQLi.php';
                   </div>
               </div>
               <?php 
-                if (isset($_SESSION['employee_id'])) {
+                if ($_SESSION['employee_id'] === 'Superadmin') {
                     include "superadminnavbar.php";
                 } else {
                     include "adminnavbar.php"; 

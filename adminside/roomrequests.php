@@ -94,7 +94,7 @@ include_once 'connectMySQLi.php';
         <?php 
         $query = "SELECT * FROM p_o_p WHERE approved IS NULL";
 
-        echo '<table class="table table-bordered noprint" border="2" border="2" cell cellspacing="15" cellpadding="5" width="1000"> 
+        echo '<table class="table table-bordered noprint" border="2" border="2" cell cellspacing="15" cellpadding="5" width="1000" style: "margin: 10px;"> 
             <thead class="thead-light"> 
                 <th> <font face="Arial">Matric No</font> </th> 
                 <th> <font face="Arial">Name</font> </th> 
@@ -127,11 +127,12 @@ include_once 'connectMySQLi.php';
                                 <input type="hidden" name="name" value="'.$name.'">
                                 <input type="hidden" name="hostel" value="'.$hostel.'">
                                 
+                                <div>
 
-                                <button type="submit" name="approve" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= " padding: 12px 15px; max-width:150px; max-height:40px; font-size: 13px; white-space: nowrap; vertical-align: middle; text-align:left;">Approve</button>
+                                    <button type="submit" name="approve" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= " padding: 12px 15px; margin: 10px 5px 5px 0px; max-width:150px; max-height:40px; font-size: 13px; white-space: nowrap; vertical-align: middle; text-align:left;">Approve</button>
 
-                                <button type="submit" name="deny" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= " padding: 12px 15px; max-width:150px; max-height:40px; font-size: 13px; white-space: nowrap; vertical-align: middle; text-align:left;">Deny</button></form>
-
+                                    <button type="submit" name="deny" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= " padding: 12px 15px;  margin: 10px 5px 5px 0px; max-width:150px; max-height:40px; font-size: 13px; white-space: nowrap; vertical-align: middle; text-align:left;">Deny</button>
+                                </div>
                             </form>
                         </td>
                     </tr>';

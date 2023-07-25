@@ -1,5 +1,13 @@
 <?php 
+    // Initialize the message variable
+    $message = '';
+
+    
     include 'connectMySQLi.php';
+
+    error_reporting(0);
+
+    // $message = NULL;
 ?>
 <html>
 <head>
@@ -36,7 +44,7 @@
         /* max-width: 1000px; Limit the maximum width of the search box to 1000px */
         margin: 0 auto; /* Center the search box horizontally */
         /* border: 1px solid #ccc; Optional border for visual clarity */
-        border-radius: 5px; /* Rounded corners (optional) */
+        /* border-radius: 5px; Rounded corners (optional) */
         overflow: hidden; /* Prevents content overflow */
     }
 
@@ -59,7 +67,7 @@
 
     #sign-out-button {
         height: 40px;
-        border-radius: 0 5px 5px 0; /* Apply rounded corners to the right side */
+        border-radius: 5px 5px 5px 5px; /* Apply rounded corners to the right side */
         white-space: nowrap; /* Prevent the button from wrapping text to the next line */
         overflow: hidden; /* Hide any overflowing text inside the button */
         vertical-align: middle;
@@ -133,7 +141,7 @@
             <div class="search-wrapper">
                 <label for="search-box" name="parameter" id="parameter">Matric Number:</label>
                 <input type="text" name= 'search-box'/>
-                <button type='submit' name="vacate" id="sign-out-button" class="btn-fill-lg bg-blue-dark btn-hover-yellow">Search</button>
+                <button type='submit' name="vacate" id="sign-out-button" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= "border-radius: 0 5px 5px 0">Search</button>
             </div>
             </form>
 
@@ -168,41 +176,52 @@
                     <th> <font face="Arial">Sign Out</font> </th> 
                 </thead>';
 
-            if ($result) {
-                while ($row = $result->fetch_assoc()) {
-                    $name = $row["name"];
-                    $matric_no = $row["matric_no"];
-                    $dob = $row["dob"];
-                    $gender = $row["gender"];
-                    $level = $row["level"]; 
-                    $dept = $row["dept"]; 
-                    $room_no = $row["room_no"]; 
+                if ($result) {
+                    while ($row = $result->fetch_assoc()) {
+                        $name = $row["name"];
+                        $matric_no = $row["matric_no"];
+                        $dob = $row["dob"];
+                        $gender = $row["gender"];
+                        $level = $row["level"]; 
+                        $dept = $row["dept"]; 
+                        $room_no = $row["room_no"]; 
 
-                    echo '<tr> 
-                            <td>'.$name.'</td> 
-                            <td>'.$matric_no.'</td> 
-                            <td>'.$dob.'</td> 
-                            <td>'.$gender.'</td> 
-                            <td>'.$level.'</td> 
-                            <td>'.$dept.'</td> 
-                            <td>'.$room_no.'</td> 
-                            <td>
-                                <form action="actualstudentsignoutscript.php" method="POST">
-                                <input type="hidden" name="matric_no" value="'.$matric_no.'">
-                                <button type="submit" name="vacate" id="sign-out-button" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= " padding: 12px 15px;
-                                max-width:150px; 
-                                max-height:40px; 
-                                font-size: 13px;
-                                white-space: nowrap;
-                                vertical-align: middle;
-                                text-align:left;">Sign Student Out</button></form>
-                            </td>
-                        </tr>';
-                }
-                $result->free();
-            } 
+                        echo '<tr> 
+                                <td>'.$name.'</td> 
+                                <td>'.$matric_no.'</td> 
+                                <td>'.$dob.'</td> 
+                                <td>'.$gender.'</td> 
+                                <td>'.$level.'</td> 
+                                <td>'.$dept.'</td> 
+                                <td>'.$room_no.'</td> 
+                                <td>
+                                    <form action="actualstudentsignoutscript.php" method="POST">
+
+                                    <input type="hidden" name="matric_no" value="'.$matric_no.'">
+
+                                    <input type="hidden" name="room_no" value="'.$room_no.'">
+
+                                    <input type="hidden" name="name" value="'.$name.'">
+
+                                    <button type="submit" name="vacate" id="sign-out-button" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= " padding: 12px 15px;
+                                    max-width:150px; 
+                                    max-height:40px; 
+                                    font-size: 13px;
+                                    white-space: nowrap;
+                                    vertical-align: middle;
+                                    text-align:left;">Sign Student Out</button></form>
+                                </td>
+                            </tr>
+                        </table>';
+                    }
+                    $result->free();
+                } 
 
         ?>
+        <div>
+            <span class="success" style="font-weight:bold; color:green,display: block; text-align: center;"><?php echo $message; ?></span>
+        </div>
+
         </div>
       </div>
       

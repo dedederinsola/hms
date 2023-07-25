@@ -20,7 +20,6 @@ $date_time_available = $_POST['date_time_available'];
 
 
 
-
 if (!mysqli_stmt_bind_param($stmt, "ssss", $room_no, $category, $description, $date_time_available)) {
     die('Error binding parameters: ' . mysqli_error($conn));
 }

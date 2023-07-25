@@ -1,13 +1,10 @@
 <?php
-    require 'studentdetailsMySQLi.php';
-
-    error_reporting(0);
+include_once 'connectMySQLi.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
-    <title>Complaint Form</title>
+    <title>Resolved Complants</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
@@ -41,6 +38,43 @@
     <link href="dashboard.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
  -->
+
+ <style>
+    .search-wrapper {
+        display: flex;
+        /* max-width: 1000px; Limit the maximum width of the search box to 1000px */
+        margin: 0 auto; /* Center the search box horizontally */
+        /* border: 1px solid #ccc; Optional border for visual clarity */
+        /* border-radius: 5px; Rounded corners (optional) */
+        overflow: hidden; /* Prevents content overflow */
+    }
+
+    #parameter {
+    flex: 0; /* Allow the dropdown to take up available space */
+    border-radius: 5px 0 0 5px; /* Apply rounded corners to the left side */
+    border: none;
+    border-right: 1px solid #ccc; /* Add a border on the right side */
+    padding: 7px;
+    width: auto; /* Remove min-width and set width to auto */
+    white-space: nowrap; /* Prevent the button from wrapping text to the next line */
+    }
+    
+    input[name='search-box'] {
+        flex: 1; /* Allow the input to take up available space */
+        height: 40px;
+        border: 1px 0px 1px 0px solid #ccc; /* Remove the input border */
+        padding: 7px;
+    }
+
+    #sign-out-button {
+        height: 40px;
+        border-radius: 5px 5px 5px 5px; /* Apply rounded corners to the right side */
+        white-space: nowrap; /* Prevent the button from wrapping text to the next line */
+        overflow: hidden; /* Hide any overflowing text inside the button */
+        vertical-align: middle;
+    }
+    </style>
+
   </head>
 
   <body>
@@ -83,82 +117,65 @@
                   <a href="#"><img src="logo.png" alt="logo"></a>
                   </div>
               </div>
-              <div class="sidebar-menu-content">
-                <?php require "studentnavbar.php"; ?>
-            </div>
-        </div>
+              <?php include "adminnavbar.php"; ?>
+          </div>
           <!-- Sidebar Area End Here -->
 
         <div class="dashboard-content-one">
                 <!-- Breadcubs Area Start Here -->
                 <div class="breadcrumbs-area">
-                    <h3>Log A Complaint</h3>
+                    <h3>Hostel View</h3>
                 </div>
         <!-- Keep all page content within the page-content inset div! -->
         <div class="page-content inset">
-            
-        <table cellspacing="200" cellpadding="20">
-            <form action="complaint.php" method="post">
-            <!-- <tr>
-                <td>
-                    <label for="room_no">Room Number:</label>
-                </td>
+        <form action = '<?php echo $_SERVER['PHP_SELF']; ?>' method= 'post'>
+            <div class="search-wrapper">
+                <label for="search-box" name="parameter" id="parameter">Hostel:</label>
+                <input type="text" name= 'search-box'/>
+                <button type='submit' name="vacate" id="sign-out-button" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= "border-radius: 0 5px 5px 0">Search</button>
+            </div>
+        </form>
 
-                <td>
-                    <input type="text" name="room_no" /><br>
-                </td>
-            </tr> -->
 
-            <tr>
-                <td>
-                    <label for="category">Category:</label>
-                </td>
-                <td>
-                    <select name="category" id="category">
-                    <option value="electrical">Electrical issues <span class="dpmenu">(e.g lights, sockets, fan)</span></option>
-                    <option value="woodwork">Carpentary issues <span class="dpmenu">(e.g doors, cupboards, fan)</span></option>
-                    <option value="bed">Bed issues <span class="dpmenu">(e.g bunks, mattress, window)</span></option>
-                    <option value="other">Other issues <span class="dpmenu">(e.g toilets, roof, window)</span></option>
-                </select><br>
-                </td>
-            </tr>
+        <?php 
 
-            <tr>
-                <td>
-                    <label for="description">Description of the problem:</label>
-                </td>
-                <td>
-                    <input type="text" name="description" style="min-height: 50px; width: 300px;"/><br>
-                </td>
-            </tr>
+        $hostel = NULL;
 
-            <tr>
-                <td>
-                    <label for="date_time_available">Available time for repairs:</label>
-                </td>
-                <td>
-                    <input type="datetime-local" name="date_time_available" /><br>
-                </td>
-            </tr>
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Retrieve the input data
+            error_reporting(0);
+            $hostel = str_replace(' ', '_', $_POST['search-box']);
+            // return;
+        }
 
-            <tr>
-                <td colspan="2" style="text-align: center;">
-                    <button type="submit" class="btn-fill-lg bg-blue-dark btn-hover-yellow">Go</button>
-                </td>
-            </tr>
+        $query = "SELECT * FROM $hostel WHERE name IS NOT NULL AND matric_no IS NOT NULL";
 
-            <tr>
-                <span class="success" style="color:green; font-weight:bold; display: block; text-align: center;"><?php echo $success; ?></span>
-                <span class="error" style="color:red; font-weight:bold; display: block; text-align: center;"><?php echo $error; ?></span>
 
-            </tr>
-            </form>
-            <!-- <div class="popup"" 
-            <?php //if (isset($_SESSION['form_submitted'])) { echo 'show'; } ?>
-            >
-              <p>Your complaint will be attended to.</p>
-            </div> -->
-        </table>
+        echo '<table class="table table-bordered noprint" border="2" cell cellspacing="15" cellpadding="5" width="1000"> 
+            <thead class="thead-light"> 
+                <th> <font face="Arial">Room</font> </th> 
+                <th> <font face="Arial">Matric No</font> </th> 
+                <th> <font face="Arial">Name</font> </th> 
+                <th> <font face="Arial">Room Type</font> </th> 
+            </thead>';
+
+        if ($result = $conn->query($query)) {
+            while ($row = $result->fetch_assoc()) {
+                $room_no = $row["room_no"];
+                $matric_no = $row["matric_no"];
+                $name = $row["name"];
+                $room_type = $row["room_type"];
+
+                echo '<tr> 
+                        <td>'.$room_no.'</td> 
+                        <td>'.$matric_no.'</td> 
+                        <td>'.$name.'</td> 
+                        <td>'.$room_type.'</td> 
+                    </tr>';
+            }
+            $result->free();
+        } 
+        ?>
         </div>
       </div>
       
@@ -201,5 +218,5 @@
         $("#wrapper").toggleClass("active");
     });
     </script> -->
-  </body>
+</body>
 </html>

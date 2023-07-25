@@ -101,13 +101,17 @@
 
     $rooms = NULL;
     $remark = NULL;
+    $room_type = NULL;
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['hostel']) && !empty($_POST['hostel'])){
             $hostel = $_POST['hostel'];
+            // $room_type = $_POST['room_type'];
+            // $remark = $_POST['remark'];
+
         }
 
-        $sql = "SELECT DISTINCT room_no, remark
+        $sql = "SELECT DISTINCT room_no, remark, room_type
                 FROM $hostel
                 WHERE name IS NULL AND matric_no IS NULL";
         
@@ -117,16 +121,19 @@
             echo '<table class="table table-bordered noprint" border="2" cell cellspacing="15" cellpadding="5" width="1000"> 
             <thead class="thead-light"> 
                 <th> <font face="Arial">Room Number</font> </th> 
-                <th> <font face="Arial">Remark</font> </th> 
+                <th> <font face="Arial">Room Type</font> </th> 
+                <th> <font face="Arial">Remark</font> </th>
                 <th> <font face="Arial">Select</font> </th> 
             </thead>';
 
             while ($row = mysqli_fetch_assoc($rooms)) {
                 $room_no = $row['room_no'];
+                $room_type = $row['room_type'];
                 $remark = $row['remark'];
 
                 echo '<tr>
                         <td>' .$room_no. '</td>
+                        <td>' .$room_type. '</td>
                         <td>' .$remark. '</td>
                         <td>
                             <form action="requestroom.php" method="POST">

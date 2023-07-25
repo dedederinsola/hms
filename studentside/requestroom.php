@@ -6,14 +6,15 @@ if (session_status() == PHP_SESSION_NONE) {
     ini_set('display_errors', 1);
 }
 
+error_reporting(0);
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['hostel']) && isset($_POST['room_no'])){
         $hostel = $_POST['hostel'];
         $room_no = $_POST['room_no'];
     }
 }
-
-$message = NULL;
 
 ?>
 
@@ -117,8 +118,12 @@ $message = NULL;
                             <!-- <label>Email Address:</label><br/>
                             <input type='email' name='email' required/>
                             <br/><br/><br/><br/> -->
+                            <p>Please upload your proof of payment, clearly showing name of sender and beneficiary, as well as date</p>
                             <p>Only upload JPG, JPEG or PNG files</p>
+
                             <input type="file" name="image" accept="image/jpeg, image/jpg, image/png" />
+
+
                             <input type='hidden' name='matric_no' value="<?php echo $_SESSION['matric_no']?>" />
 
                             <input type="hidden" name="hostel" value="<?php echo $hostel; ?>">
@@ -128,11 +133,15 @@ $message = NULL;
                             </br></br></br>
 
                             <button type="submit" name="upload" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= "padding: 12px 15px;max-width:150px; max-height:40px; font-size: 13px; white-space: nowrap; vertical-align: middle; text-align:left;">Upload</button></br>
-                            </br></br></br>
-                            
-                            <span class="success" style="font-weight:bold; display: block; text-align: center;"><?php echo $message; ?></span>
+
+                            </br>   
                         </form>
                     </td>
+                </tr>
+                <tr>
+                    <span class="success" style="font-weight:bold; color:green,display: block; text-align: center;"><?php echo $smessage; ?></span>
+
+                    <span class="error" style="color:red; font-weight:bold; display: block; text-align: center;"><?php echo $error; ?></br></br></span>
                 </tr>
             </table>
         </div>

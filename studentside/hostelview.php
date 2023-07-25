@@ -157,6 +157,8 @@ if (!empty($_SESSION['room_no'])) {
                                     <td>
                                     <form action="selectroom.php" method="POST">
                                         <input type="hidden" name="hostel" value="'.$hostel.'">
+                                        <input type="hidden" name="room_type" value="'.$room_type.'">
+                                        <input type="hidden" name="remark" value="'.$remark.'">
                                         <button type="submit" name="select_room" id="select_room" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= "padding: 12px 15px;
                                         max-width:150px; 
                                         max-height:40px; 
@@ -218,13 +220,19 @@ if (!empty($_SESSION['room_no'])) {
                                     <td>
                                     <form action="selectroom.php" method="POST">
                                         <input type="hidden" name="hostel" value="'.$hostel.'">
+
+                                        <input type="hidden" name="room_type" value="'.$room_type.'">
+
+                                        <input type="hidden" name="remark" value="'.$remark.'">
+                                        
                                         <button type="submit" name="select_room" id="select_room" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= "padding: 12px 15px;
                                         max-width:150px; 
                                         max-height:40px; 
                                         font-size: 13px;
                                         white-space: nowrap;
                                         vertical-align: middle;
-                                        text-align:left;">Choose This Block</button></form>
+                                        text-align:left;">Choose This Block</button>
+                                    </form>
                                     </td>
     
                                 </tr>';

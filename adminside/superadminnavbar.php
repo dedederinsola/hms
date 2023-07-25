@@ -61,7 +61,9 @@
 
                                 <li class="nav-item">
                                     <a href="hosteldata.php" class="nav-link"><i class="fas fa-angle-right"></i>Old Occupancy Data</a>
-                                </li>                                
+                                <li>                                                               <li class="nav-item">
+                                    <a href="applicationhistory.php" class="nav-link"><i class="fas fa-angle-right"></i>Application History</a>
+                                <li>                              
                             </ul>
                         </li>
 
