@@ -38,6 +38,15 @@ include_once 'connectMySQLi.php';
     <link href="dashboard.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
  -->
+
+ <style>
+    @media screen and (max-width: 600px) {
+        /* Apply flex-direction: column; only when the screen size is smaller than 600px */
+        td div {
+            flex-direction: column;
+        }
+    }
+</style>
   </head>
 
   <body>
@@ -127,11 +136,11 @@ include_once 'connectMySQLi.php';
                                 <input type="hidden" name="name" value="'.$name.'">
                                 <input type="hidden" name="hostel" value="'.$hostel.'">
                                 
-                                <div>
+                                <div style= "display: flex; justify-content: center; align-items: center;">
 
-                                    <button type="submit" name="approve" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= " padding: 12px 15px; margin: 10px 5px 5px 0px; max-width:150px; max-height:40px; font-size: 13px; white-space: nowrap; vertical-align: middle; text-align:left;">Approve</button>
+                                    <button type="submit" name="approve" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= " padding: 12px 15px; margin: 10px 35px 5px 35px; max-width:150px; max-height:40px; font-size: 13px; white-space: nowrap; vertical-align: middle; text-align:left;">Approve</button>
 
-                                    <button type="submit" name="deny" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= " padding: 12px 15px;  margin: 10px 5px 5px 0px; max-width:150px; max-height:40px; font-size: 13px; white-space: nowrap; vertical-align: middle; text-align:left;">Deny</button>
+                                    <button type="submit" name="deny" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= " padding: 12px 15px;  margin: 10px 5px 5px 35px; max-width:150px; max-height:40px; font-size: 13px; white-space: nowrap; vertical-align: middle; text-align:left;">Deny</button>
                                 </div>
                             </form>
                         </td>

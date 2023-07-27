@@ -1,10 +1,10 @@
 <?php
-include_once 'connectMySQLi.php';
+include 'connectMySQLi.php';
 ?>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Resolved Complants</title>
+    <title>Hostel View</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
@@ -131,7 +131,7 @@ include_once 'connectMySQLi.php';
         <form action = '<?php echo $_SERVER['PHP_SELF']; ?>' method= 'post'>
             <div class="search-wrapper">
                 <label for="search-box" name="parameter" id="parameter">Hostel:</label>
-                <input type="text" name= 'search-box'/>
+                <input type="text" name= 'search-box' id= 'search-box'/>
                 <button type='submit' name="vacate" id="sign-out-button" class="btn-fill-lg bg-blue-dark btn-hover-yellow" style= "border-radius: 0 5px 5px 0">Search</button>
             </div>
         </form>
@@ -141,16 +141,7 @@ include_once 'connectMySQLi.php';
 
         $hostel = NULL;
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Retrieve the input data
-            error_reporting(0);
-            $hostel = str_replace(' ', '_', $_POST['search-box']);
-            // return;
-        }
-
-        $query = "SELECT * FROM $hostel WHERE name IS NOT NULL AND matric_no IS NOT NULL";
-
-
+        
         echo '<table class="table table-bordered noprint" border="2" cell cellspacing="15" cellpadding="5" width="1000"> 
             <thead class="thead-light"> 
                 <th> <font face="Arial">Room</font> </th> 
@@ -159,22 +150,37 @@ include_once 'connectMySQLi.php';
                 <th> <font face="Arial">Room Type</font> </th> 
             </thead>';
 
-        if ($result = $conn->query($query)) {
-            while ($row = $result->fetch_assoc()) {
-                $room_no = $row["room_no"];
-                $matric_no = $row["matric_no"];
-                $name = $row["name"];
-                $room_type = $row["room_type"];
 
-                echo '<tr> 
-                        <td>'.$room_no.'</td> 
-                        <td>'.$matric_no.'</td> 
-                        <td>'.$name.'</td> 
-                        <td>'.$room_type.'</td> 
-                    </tr>';
-            }
-            $result->free();
-        } 
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Retrieve the input data
+            error_reporting(0);
+            $hostel = str_replace(' ', '_', $_POST['search-box']);
+            // return;
+
+            $query = "SELECT * FROM $hostel WHERE name IS NOT NULL AND matric_no IS NOT NULL";
+
+
+
+            if ($result = $conn->query($query)) {
+                while ($row = $result->fetch_assoc()) {
+                    $room_no = $row["room_no"];
+                    $matric_no = $row["matric_no"];
+                    $name = $row["name"];
+                    $room_type = $row["room_type"];
+    
+                    echo '<tr> 
+                            <td>'.$room_no.'</td> 
+                            <td>'.$matric_no.'</td> 
+                            <td>'.$name.'</td> 
+                            <td>'.$room_type.'</td> 
+                        </tr>';
+                }
+                $result->free();
+            } 
+    
+
+        }
+
         ?>
         </div>
       </div>
