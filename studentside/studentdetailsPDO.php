@@ -28,4 +28,53 @@ $_SESSION['room_no'] = $row['room_no'];
 
 // Convert the BLOB data to base64 encoding
 $imageDataEncoded = base64_encode($imageData);
+
+if (!empty($_SESSION['room_no'])) {
+    $tableName = explode(' ', $_SESSION['room_no'])[0];
+}
+
+$tableNames = [];
+
+if ($_SESSION['gender'] = 'Female') {
+    $occ = "SELECT hostel FROM girls_special";
+    $occcol = $conn->query($occ);
+    if ($occcol) {
+        while ($cell = $occcol->fetch_assoc()) {
+            $hostel = $cell["hostel"];
+            $tableNames[] = $hostel;
+        }
+    }
+}
+
+if ($_SESSION['gender'] = 'Male') {
+    $occ = "SELECT hostel FROM boys_special";
+    $occcol = $conn->query($occ);
+    if ($occcol) {
+        while ($cell = $occcol->fetch_assoc()) {
+            $hostel = $cell["hostel"];
+            $tableNames[] = $hostel;
+        }
+    }
+}
+
+if (in_array($tableName, $tableNames)) {
+// Get the room type from a different table
+$sql = "SELECT room_type FROM $tableName WHERE matric_no = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('s', $matric_no);
+$stmt->execute();
+
+// Check if the query executed successfully
+$type = $stmt->get_result();
+if ($type->num_rows === 0) {
+    // die('Error in retrieving student info: no student found, kindly log in');
+    header('Location: login.html');
+}
+
+$acc = $type->fetch_assoc();
+$_SESSION['room_type'] = $acc['room_type'];
+} else {
+    $_SESSION['room_type'] = NULL;
+}
+
 ?>

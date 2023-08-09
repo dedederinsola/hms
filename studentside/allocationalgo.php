@@ -1,5 +1,5 @@
 <?php 
-require 'studentdetailsPDO.php';
+require 'studentdetailsMySQLi.php';
 
 error_reporting(0);
 
@@ -27,47 +27,57 @@ function assignRoomToStudent($matric_no, $name, $conn) {
     if ($gender === 'Male') {
         if ($level === '100') {
             $sql = "SELECT hostel FROM boys_hostel WHERE occupant LIKE '%$level%'";
-            $stmt = $conn->query($sql);
-            $results = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        
-            foreach ($results as $hostel) {
-                $tableNames[] = $hostel;
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+            $results = $stmt->get_result(); 
+
+            while ($row = $results->fetch_assoc()) {
+                $tableNames[] = $row['hostel'];
             }
         }
         if ($level === '200') {
             $sql = "SELECT hostel FROM boys_hostel WHERE occupant LIKE '%$level%'";
-            $stmt = $conn->query($sql);
-            $results = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        
-            foreach ($results as $hostel) {
-                $tableNames[] = $hostel;
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+            $results = $stmt->get_result(); 
+            
+            while ($row = $results->fetch_assoc()) {
+                $tableNames[] = $row['hostel'];
             }
         }
         if ($level === '300') {
             $sql = "SELECT hostel FROM boys_hostel WHERE occupant LIKE '%$level%'";
-            $stmt = $conn->query($sql);
-            $results = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        
-            foreach ($results as $hostel) {
-                $tableNames[] = $hostel;
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+            $results = $stmt->get_result(); 
+            
+            while ($row = $results->fetch_assoc()) {
+                $tableNames[] = $row['hostel'];
             }
         }
         if ($level === '400') {
             $sql = "SELECT hostel FROM boys_hostel WHERE occupant LIKE '%$level%'";
-            $stmt = $conn->query($sql);
-            $results = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        
-            foreach ($results as $hostel) {
-                $tableNames[] = $hostel;
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+            $results = $stmt->get_result(); 
+            
+            while ($row = $results->fetch_assoc()) {
+                $tableNames[] = $row['hostel'];
             }
         }
         if ($level === 'JUPEB') {
             $sql = "SELECT hostel FROM boys_hostel WHERE occupant LIKE '%$level%'";
-            $stmt = $conn->query($sql);
-            $results = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        
-            foreach ($results as $hostel) {
-                $tableNames[] = $hostel;
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+            $results = $stmt->get_result(); 
+            
+            while ($row = $results->fetch_assoc()) {
+                $tableNames[] = $row['hostel'];
             }
         }
         // Add more conditions for other levels if needed
@@ -77,64 +87,65 @@ function assignRoomToStudent($matric_no, $name, $conn) {
     if ($gender === 'Female') {
         if ($level === '100') {
             $sql = "SELECT hostel FROM girls_hostel WHERE occupant LIKE '%$level%'";
-            $stmt = $conn->query($sql);
+            $result = $conn->query($sql);
 
-            if (!$stmt) {
+            if (!$result) {
                 // Query execution failed, handle the error (e.g., display an error message or log the error).
                 echo "Error executing the query: " . $conn->error;
             }
-            $results = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-            if (empty($results)) {
-                // No matching rows found, handle the case (e.g., display a message or log the result).
-                echo "No matching rows found.";
+            while ($row = $result->fetch_assoc()) {
+                $tableNames[] = $row['hostel'];
             }
 
-        
-            foreach ($results as $hostel) {
-                $tableNames[] = $hostel;
-            }
         }
 
 
         if ($level === '200') {
             $sql = "SELECT hostel FROM girls_hostel WHERE occupant LIKE '%$level%'";
-            $stmt = $conn->query($sql);
-            $results = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        
-            foreach ($results as $hostel) {
-                $tableNames[] = $hostel;
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+            $results = $stmt->get_result(); 
+            
+            while ($row = $results->fetch_assoc()) {
+                $tableNames[] = $row['hostel'];
             }
         }
 
 
         if ($level === '300') {
             $sql = "SELECT hostel FROM girls_hostel WHERE occupant LIKE '%$level%'";
-            $stmt = $conn->query($sql);
-            $results = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        
-            foreach ($results as $hostel) {
-                $tableNames[] = $hostel;
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+            $results = $stmt->get_result(); 
+            
+            while ($row = $results->fetch_assoc()) {
+                $tableNames[] = $row['hostel'];
             }
         }
 
 
         if ($level === '400') {
             $sql = "SELECT hostel FROM girls_hostel WHERE occupant LIKE '%$level%'";
-            $stmt = $conn->query($sql);
-            $results = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        
-            foreach ($results as $hostel) {
-                $tableNames[] = $hostel;
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+            $results = $stmt->get_result(); 
+            
+            while ($row = $results->fetch_assoc()) {
+                $tableNames[] = $row['hostel'];
             }
         }
         if ($level === 'JUPEB') {
             $sql = "SELECT hostel FROM girls_hostel WHERE occupant LIKE '%$level%'";
-            $stmt = $conn->query($sql);
-            $results = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        
-            foreach ($results as $hostel) {
-                $tableNames[] = $hostel;
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+            $results = $stmt->get_result(); 
+            
+            while ($row = $results->fetch_assoc()) {
+                $tableNames[] = $row['hostel'];
             }
         }
         // Add more conditions for other levels if needed
@@ -151,58 +162,64 @@ function assignRoomToStudent($matric_no, $name, $conn) {
     
     // Loop through the table names and check if they have available rooms
     foreach ($tableNames as $tableName) {
-    // Fetch all available rooms from the current table
-    $sql = "SELECT sn, room_no FROM $tableName";
-    $stmt = $conn->query($sql);
-    $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Loop through the rooms and check if they are empty
-    foreach ($rooms as $room) {
-        $sn = $room['sn'];
-        $room_no = $room['room_no'];
-
-        // Check if the room is empty by verifying if a student is assigned to it
-        $sql = "SELECT * FROM $tableName WHERE sn = :sn AND matric_no IS NULL AND name IS NULL";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':sn', $sn);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
+        // Fetch all available rooms from the current table
+        $sql = "SELECT sn, room_no FROM $tableName";
+        $result = $conn->query($sql);
+    
         if ($result) {
-            // Room is empty, assign the student to this room
-            $updateSql = "UPDATE $tableName SET matric_no = :matric_no, name = :name WHERE sn = :sn";
-            $updateStmt = $conn->prepare($updateSql);
-            $updateStmt->bindParam(':matric_no', $matric_no);
-            $updateStmt->bindParam(':name', $name);
-            $updateStmt->bindParam(':sn', $sn);
-            $updateStmt->execute();
-
-            // Set session variables
-            $_SESSION['room_no'] = $tableName . $room_no;
-            $_SESSION['name'] = $name;
-
-            // Return the concatenation of table name with room number
-            return "$tableName" . ' '. $room_no;
+            $rooms = $result->fetch_all(MYSQLI_ASSOC);
+    
+            // Loop through the rooms and check if they are empty
+            foreach ($rooms as $room) {
+                $sn = $room['sn'];
+                $room_no = $room['room_no'];
+    
+                // Check if the room is empty by verifying if a student is assigned to it
+                $sql = "SELECT * FROM $tableName WHERE sn = ? AND matric_no IS NULL AND name IS NULL";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param('i', $sn);
+                $stmt->execute();
+                $result = $stmt->get_result()->fetch_assoc();
+    
+                if ($result) {
+                    // Room is empty, assign the student to this room
+                    $updateSql = "UPDATE $tableName SET matric_no = ?, name = ? WHERE sn = ?";
+                    $updateStmt = $conn->prepare($updateSql);
+                    $updateStmt->bind_param('ssi', $matric_no, $name, $sn);
+                    $updateStmt->execute();
+    
+                    // Set session variables
+                    $_SESSION['room_no'] = $tableName . $room_no;
+                    $_SESSION['name'] = $name;
+    
+                    // Return the concatenation of table name with room number
+                    echo "$tableName" . ' ' . $room_no;
+    
+                    // Terminate the script after processing one room
+                    exit();
+                }
+            }
+    
+            // If the loop completes without assigning a room, it means all rooms are full
+            echo "All rooms are full.";
+    
+            // Terminate the script after processing one table
+            exit();
         }
     }
-
-    // If the loop completes without assigning a room, it means all rooms are full
-    echo "All rooms are full.";
-
-    // Terminate the script after processing one room
-    exit();
-    }
+    // return;
+    header('Location: roomallocation.php');
 }
 // var_dump($room_no);
 // die;
 // Check if the student already requested a room
 
-$sql = "SELECT * FROM p_o_p WHERE matric_no = :matric_no";
+$sql = "SELECT * FROM p_o_p WHERE matric_no = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bindParam(':matric_no', $matric_no);
+$stmt->bind_param('s', $matric_no);
 $stmt->execute();
-
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
 
 if ($row) {
     // Student already has a request
@@ -224,6 +241,8 @@ if ($row) {
         $message = "Failed to assign a room. All rooms are full.";
     }
 }
+
+
 
 
 // foreach ($records as $row) {

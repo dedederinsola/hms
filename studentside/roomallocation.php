@@ -3,8 +3,8 @@ require 'studentdetailsMySQLi.php';
 
 require 'allocationalgo.php';
 
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,7 +13,7 @@ require 'allocationalgo.php';
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Student Room</title>
+    <title>Room Allocation</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
@@ -39,6 +39,64 @@ require 'allocationalgo.php';
     <script src="js/modernizr-3.6.0.min.js"></script>
     <script src="js/jsnew.js"></script>
 
+    <style type="text/css">
+     @media screen{
+        .noprint{
+
+        }
+        .noScreen{
+            display:none;
+        }
+    }
+
+     @media print{
+        .noprint{
+            display:none;
+        }
+        .noScreen{
+
+        }
+    }
+
+    table {
+        min-width: auto;
+        max-width: max-content;
+        margin: 20px 20px 35px 50px;
+    }
+
+    td, th {
+        min-width: 250px;
+        padding-bottom: 20px;
+    }
+
+    .studentimg {
+        height: 115px; 
+        width: 115px; 
+        line-height: 129px; 
+        text-align: center; 
+        border-radius: 50%; 
+        overflow: hidden; 
+        margin-left: 50px; 
+        margin-bottom:40px
+    }
+
+    .printimg {
+        height: 115px; 
+        width: 115px; 
+        /* line-height: 129px;  */
+        /* text-align: center;  */
+        border-radius: 15px;
+        overflow: hidden; 
+    }
+
+    #printinfo{
+        font-size: 25px;
+        margin-bottom: 25px;
+    }
+
+
+    </style>
+
 
     <!-- Bootstrap core CSS
     <link href="dashboardbootstrap.css" rel="stylesheet"> -->
@@ -59,7 +117,7 @@ require 'allocationalgo.php';
             <div class="nav-bar-header-one">
                 <div class="header-logo">
                     <a href="#">
-                        <img src="logo.png" alt="logo">
+                        <img style = "max-width: 250px;" src="logo.png" alt="logo">
                     </a>
                 </div>
                 <div class="toggle-button sidebar-toggle">
@@ -83,66 +141,149 @@ require 'allocationalgo.php';
       <!-- Page content -->
       <div class="dashboard-page-one">
           <!-- Sidebar Area Start Here -->
-          <div class="sidebar-main sidebar-menu-one sidebar-expand-md sidebar-color">
+          <div class="sidebar-main sidebar-menu-one sidebar-expand-md sidebar-color ">
               <div class="mobile-sidebar-header d-md-none">
-                  <div class="header-logo">
-                  <a href="#"><img src="logo.png" alt="logo"></a>
+                  <div class="header-logo  noprint">
+                    <a href="#"><img src="logo.png" alt="logo"></a>
                   </div>
               </div>
-              <?php include "studentnavbar.php"; ?>
+              <div class="noprint">
+                <?php include "studentnavbar.php"; ?>
+              </div>
           </div>
           <!-- Sidebar Area End Here -->
 
         <div class="dashboard-content-one">
-                <!-- Breadcubs Area Start Here -->
-                <div class="breadcrumbs-area">
-                    <h3>Hostel Dashboard</h3>
+            <!-- Breadcubs Area Start Here -->
+            <div class="breadcrumbs-area noprint">
+                <h3>Student Details</h3>
+            </div>
+            <div class="row">
+                <!-- Student Details Area Start Here -->
+                <div class="noprint">
+                    <div>
+                        <p class="noprint">
+                            <button style="font-size:18px; flex:1; margin: 20px 20px 20px 5px;" onclick="window.print()">Print</button>
+                        </p>
+                        <!-- Display the image using base64 encoded data -->
+                        <div style="height: 115px; width: 115px; line-height: 129px; text-align: center; border-radius: 50%; overflow: hidden; margin-left: 50px; margin-bottom:40px">
+                            <img src="data:image/jpeg;base64,<?php echo $imageDataEncoded; ?>" alt="Student Image">
+                        </div>
+                        <table>
+                            <tr>
+                                <td style="font-weight: bold;">Name:</td>
+                                <td style="#"><span><?php echo $_SESSION['name']; ?></span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">Matric Number:</td>
+                                <td><?php echo $_SESSION['matric_no']; ?></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">Date Of Birth:</td>
+                                <td><?php echo $_SESSION['dob']; ?></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">Gender:</td>
+                                <td><?php echo $_SESSION['gender']; ?></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">Level:</td>
+                                <td><?php echo $_SESSION['level']; ?></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;">Department:</td>
+                                <td><?php echo $_SESSION['dept']; ?></td>
+                            </tr>
+                            <?php
+                                if (!empty($_SESSION['room_no'])) {
+                                    echo '<tr>
+                                            <td style="font-weight: bold;">Room:</td>
+                                            <td>'. $_SESSION['room_no'] .'</td>
+                                        </tr>';          
+                                }
+                                if (!empty($_SESSION['room_type'])) {
+                                    echo '<tr>
+                                            <td style="font-weight: bold;">Accomodation Type:</td>
+                                            <td>'. $_SESSION['room_type'] .'</td>
+                                        </tr>';
+                                }
+
+                            ?>
+                        </table>
+                    </div>
                 </div>
-        <!-- Keep all page content within the page-content inset div! -->
-        <div class="page-content inset">
-          <div class="row">
-              <!-- Display the image using base64 encoded data -->
-              <div style="height: 115px; width: 115px; line-height: 129px; text-align: center; border-radius: 50%; overflow: hidden;">
-                <img src="data:image/jpeg;base64,<?php echo $imageDataEncoded; ?>" alt="Student Image">
-              </div>
-              <table style="margin-left: 20px; margin-top:30px;" cellspacing="200" cellpadding="5" width="1000">
-            <tr>
-                <td style="font-weight: bold;">Name:</td>
-                <td style="#"><span><?php echo $_SESSION['name']; ?></span></td>
-            </tr>
-            <tr>
-                <td style="font-weight: bold;">Matric Number:</td>
-                <td><?php echo $_SESSION['matric_no']; ?></td>
-            </tr>
-            <tr>
-                <td style="font-weight: bold;">Date Of Birth:</td>
-                <td><?php echo $_SESSION['dob']; ?></td>
-            </tr>
-            <tr>
-                <td style="font-weight: bold;">Gender:</td>
-                <td><?php echo $_SESSION['gender']; ?></td>
-            </tr>
-            <tr>
-                <td style="font-weight: bold;">Level:</td>
-                <td><?php echo $_SESSION['level']; ?></td>
-            </tr>
-            <tr>
-                <td style="font-weight: bold;">Department</td>
-                <td><?php echo $_SESSION['dept']; ?></td>
-            </tr>
-            <tr>
-                <td style="font-weight: bold;">Room</td>
-                <td><span><?php echo $message; ?></span></td>
-            </tr>            
-          </table>
 
-            <!-- <form action = "roomallocation.php" method="post">
-                <button type="submit" class="btn btn-primary btn-block btn-large">Get Room</button>
-            </form> -->
+                <table width="100%" class="table table-borderless noScreen" style="max-width:100%;">
+                    <tr>
+                        <td align="center"><img src="main.png" width="105" height="145"></td>
+                    </tr>
+                    <tr>
+                    <td align="center">
+                    <p><b><span size="5" face="Baskerville Old Face" color="black">CRAWFORD UNIVERSITY, FAITH CITY, IGBESA, OGUN STATE</span> <br/>
+                    </p>
+                        <p align="center"><b><font size="5" face="Baskerville Old Face" color="black">HOSTEL SLIP</font></b><p align="center"></td>
+                    </tr>
+                </table> </br></br>
+                
+                <div>
+                    <table width="100%" class="table table-borderless noScreen" style="max-width:100%;">
+                        <tr>
+                            <td width="25%">
+                                <!-- Display the image using base64 encoded data -->
+                                <div class="item-img">
+                                    <img src="data:image/jpeg;base64,<?php echo $imageDataEncoded; ?>" style="width: 160px; height: 200px; border-radius: 10px;" alt="Student Image">
+                                </div>
+                            </td>
+                        </tr>
+                        <table class="table table-borderless noScreen" style="max-width:100%;">
+                            <tr id="printinfo">
+                                <td style="font-weight: bold;">Name:</td>
+                                <td style="#"><span><?php echo $_SESSION['name']; ?></span></td>
+                            </tr>
+                            <tr id="printinfo">
+                                <td style="font-weight: bold;">Matric Number:</td>
+                                <td><?php echo $_SESSION['matric_no']; ?></td>
+                            </tr>
+                            <tr id="printinfo">
+                                <td style="font-weight: bold;">Date Of Birth:</td>
+                                <td><?php echo $_SESSION['dob']; ?></td>
+                            </tr>
+                            <tr id="printinfo">
+                                <td style="font-weight: bold;">Gender:</td>
+                                <td><?php echo $_SESSION['gender']; ?></td>
+                            </tr>
+                            <tr id="printinfo">
+                                <td style="font-weight: bold;">Level:</td>
+                                <td><?php echo $_SESSION['level']; ?></td>
+                            </tr>
+                            <tr id="printinfo">
+                                <td style="font-weight: bold;">Department:</td>
+                                <td><?php echo $_SESSION['dept']; ?></td>
+                            </tr>
+                            <?php
+                                if (!empty($_SESSION['room_no'])) {
+                                    echo '<tr id="printinfo">
+                                            <td style="font-weight: bold;">Room:</td>
+                                            <td>'. $_SESSION['room_no'] .'</td>
+                                        </tr>';          
+                                }
+                                if (!empty($_SESSION['room_type'])) {
+                                    echo '<tr id="printinfo">
+                                            <td style="font-weight: bold;">Accomodation Type:</td>
+                                            <td>'. $_SESSION['room_type'] .'</td>
+                                        </tr>';
+                                }
 
-            
-          </div>
-        </div>
+                            ?>
+                        </table>
+                    </table>
+                    <footer class="footer-wrap-layout1 noScreen" style="text-align: left; vertical-align: bottom;">
+                        <div class="copyright">
+                            <?php echo 'Printed from Crawford eduPortal '. date("Y-m-d") . " " . date("H:i:s"); ?>                        </div>
+                    </footer>
+                </div>
+
+            </div>
       </div>
       
     </div>
