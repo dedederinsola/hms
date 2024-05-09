@@ -27,7 +27,7 @@ $result = mysqli_stmt_get_result($stmt);
 
 // Check if there is a row returned
 if (mysqli_num_rows($result) == 1) {
-    header('Location: dashboard!.php');
+    header('Location: studentside/dashboard.php');
   exit;
 } else {
   // Invalid username or password
